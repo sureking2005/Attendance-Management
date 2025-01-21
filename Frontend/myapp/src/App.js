@@ -1,18 +1,21 @@
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
+import StudentPage from './pages/StudentPage';
 
 function App() {
-  const title="Attendance Management System";
-  const page_name="Select Role";
 
   return (
-    <div className="App">
-          <div className="content">
-            <h1>{title}</h1>
-            <p>{page_name}</p>
-           
-          </div>
-    </div>
+    <Router>
+      <div className="App">
+        {/* Define Routes */}
+        <Routes>
+          <Route path="/" element={<StudentPage />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
 export default App;
+
