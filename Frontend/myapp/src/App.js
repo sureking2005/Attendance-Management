@@ -4,6 +4,8 @@ import HomePage from './components/HomePage';
 import TeacherLoginForm from './components/TeacherLoginForm';
 import StudentLogin from './components/StudentLogin';
 import ParentLogin from './components/ParentLogin';
+import StudentReg from './components/StudentReg';
+import TeacherReg from './components/TeacherReg';
 function App() {
   return (
     <Router>
@@ -12,6 +14,8 @@ function App() {
         <Route path="/teacher-login" element={<TeacherLoginForm />} />
         <Route path="/student-login" element={<StudentLogin />} />
         <Route path="/parent-login" element={<ParentLogin/>} />
+        <Route path="/student-register" element={<StudentReg />} />
+        <Route path="/teacher-register" element={<TeacherReg />} />
       </Routes>
     </Router>
   );
