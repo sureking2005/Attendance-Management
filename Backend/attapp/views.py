@@ -11,7 +11,7 @@ def teacher_login(request):
 
         return JsonResponse({'message': 'Teacher login successful'})
     return JsonResponse({'message':'Inavlid request method'},status=405)
-
+#command
 @csrf_exempt
 def student_login(request):
     if request.method=='POST':
