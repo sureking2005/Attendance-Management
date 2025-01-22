@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 const LoginForm = ({ role }) => {
   const [formData, setFormData] = useState({
     username: '',
+    organisation_name: '',
+    email_id: '',
     password: ''
   });
 
@@ -47,6 +49,28 @@ const LoginForm = ({ role }) => {
               type="text"
               name="username"
               value={formData.username}
+              onChange={handleChange}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">organisation_name</label>
+            <input
+              type="text"
+              name="organisation_name"
+              value={formData.organisation_name}
+              onChange={handleChange}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Email</label>
+            <input
+              type="email"
+              name="email_id"
+              value={formData.email_id}
               onChange={handleChange}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               required
