@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 
-const LoginForm = ({ role }) => {
+const TeacherLoginForm = () => {
   const [formData, setFormData] = useState({
-    username: '',
+    id_number: '',
     password: ''
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:8000/api/${role}/login/`, {
+      const response = await fetch('http://localhost:8000/api/teacher/login/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -18,10 +18,8 @@ const LoginForm = ({ role }) => {
       });
       const data = await response.json();
       if (response.ok) {
-        // Handle successful login
         console.log('Login successful:', data);
       } else {
-        // Handle login error
         console.error('Login failed:', data);
       }
     } catch (error) {
@@ -39,14 +37,36 @@ const LoginForm = ({ role }) => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-96">
-        <h2 className="text-2xl font-bold mb-6 text-center capitalize">{role} Login</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Teacher Login</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Username</label>
+        <div>
+            <label className="block text-sm font-medium text-gray-700">Name</label>
             <input
               type="text"
-              name="username"
-              value={formData.username}
+              name="Name"
+              value={formData.Name}
+              onChange={handleChange}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">ID Number</label>
+            <input
+              type="text"
+              name="id_number"
+              value={formData.id_number}
+              onChange={handleChange}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">class</label>
+            <input
+              type="text"
+              name="class"
+              value={formData.id_number}
               onChange={handleChange}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               required
@@ -75,4 +95,4 @@ const LoginForm = ({ role }) => {
   );
 };
 
-export default LoginForm;
+export default TeacherLoginForm;
