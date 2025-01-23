@@ -22,6 +22,7 @@ const TeacherReg = () => {
                 },
                 body: JSON.stringify(formData),
             });
+            
             const data = await response.json();
             if (response.ok) {
                 console.log('Registration successful:', data);

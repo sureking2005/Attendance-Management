@@ -80,10 +80,17 @@ WSGI_APPLICATION = 'Attendance.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.dummy',
     }
 }
+
+# MongoDB connection settings (managed in views.py)
+MONGO_DB_SETTINGS = {
+    'HOST': 'localhost',
+    'PORT': 27017,
+    'DB_NAME': 'attendance',
+}
+
 
 
 # Password validation
