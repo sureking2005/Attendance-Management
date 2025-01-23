@@ -12,22 +12,26 @@ const TeacherDashboard = ({ teacherId }) => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const teacherIdFromUrl = queryParams.get('teacherId');
+
   useEffect(() => {
     if (!teacherId && !teacherIdFromUrl) {
       alert('Teacher ID is missing. Please log in again.');
       window.location.href = '/teacher-login';
     }
   }, [teacherId, teacherIdFromUrl]);
+
   const effectiveTeacherId = teacherId || teacherIdFromUrl;
+
   const handleAddStudent = () => {
     if (studentDetails.name && studentDetails.id) {
       setAttendance([...attendance, studentDetails]);
       setStudentDetails({ name: '', id: '', status: 'Present' });
     }
   };
+
   const handleSubmit = async () => {
     if (!effectiveTeacherId) {
-      alert('Teacher ID is missing. Please log in again.');
+      alert('Teacher ID (id_number) is missing. Please log in again.');
       return;
     }
     if (!date || attendance.length === 0) {
@@ -39,7 +43,7 @@ const TeacherDashboard = ({ teacherId }) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          teacher_id: effectiveTeacherId,
+          id_number: effectiveTeacherId, // Send id_number instead of teacher_id
           date,
           attendance_records: attendance,
         }),
@@ -57,6 +61,7 @@ const TeacherDashboard = ({ teacherId }) => {
       alert('An error occurred while saving attendance.');
     }
   };
+
   return (
     <div className="min-h-screen p-8 bg-gray-100">
       <h1 className="text-2xl font-bold mb-4">Teacher Dashboard</h1>
@@ -119,4 +124,5 @@ const TeacherDashboard = ({ teacherId }) => {
     </div>
   );
 };
+
 export default TeacherDashboard;

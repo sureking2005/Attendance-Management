@@ -20,7 +20,8 @@ const TeacherLoginForm = () => {
       if (response.ok) {
         console.log('Login successful:', data);
         alert('Login successful!');
-        window.location.href = `/attendance?teacherId=${data.id}`;
+        // Redirect with id_number
+        window.location.href = `/attendance?teacherId=${data.id_number}`;
       } else {
         console.error('Login failed:', data);
         alert(data.message || 'Login failed. Please try again.');
@@ -81,4 +82,3 @@ const TeacherLoginForm = () => {
 };
 
 export default TeacherLoginForm;
-

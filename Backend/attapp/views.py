@@ -111,19 +111,19 @@ def save_attendance(request):
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
-            teacher_id = data.get('teacher_id')
+            id_number = data.get('id_number')  # Changed from teacher_id to id_number
             date = data.get('date')
             attendance_records = data.get('attendance_records')
 
-            if not teacher_id:
-                return JsonResponse({'message': 'Teacher ID is missing'}, status=400)
+            if not id_number:
+                return JsonResponse({'message': 'Teacher ID (id_number) is missing'}, status=400)
             if not date:
                 return JsonResponse({'message': 'Date is missing'}, status=400)
             if not attendance_records:
                 return JsonResponse({'message': 'Attendance records are missing'}, status=400)
 
             attendance_doc = {
-                'teacher_id': teacher_id,
+                'id_number': id_number,  # Store id_number in attendance
                 'date': date,
                 'attendance_records': attendance_records
             }
@@ -132,5 +132,3 @@ def save_attendance(request):
         except Exception as e:
             return JsonResponse({'message': str(e)}, status=500)
     return JsonResponse({'message': 'Invalid request method'}, status=405)
-
-    
