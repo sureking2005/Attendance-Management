@@ -24,13 +24,10 @@ def teacher_register(request):
             name = data.get('name')
             id_number = data.get('id_number')
             password = data.get('password')
-
             if not (name and id_number and password):
                 return JsonResponse({'message': 'Missing required fields'}, status=400)
-
             if teacher_collection.find_one({'id_number': id_number}):
                 return JsonResponse({'message': 'Teacher already registered'}, status=400)
-
             hashed_password = generate_password_hash(password)
             teacher_collection.insert_one({
                 'name': name,
@@ -111,24 +108,43 @@ def save_attendance(request):
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
-            id_number = data.get('id_number')  # Changed from teacher_id to id_number
+            id_number = data.get('id_number')
             date = data.get('date')
             attendance_records = data.get('attendance_records')
-
             if not id_number:
                 return JsonResponse({'message': 'Teacher ID (id_number) is missing'}, status=400)
             if not date:
                 return JsonResponse({'message': 'Date is missing'}, status=400)
             if not attendance_records:
                 return JsonResponse({'message': 'Attendance records are missing'}, status=400)
-
             attendance_doc = {
-                'id_number': id_number,  # Store id_number in attendance
+                'id_number': id_number,
                 'date': date,
                 'attendance_records': attendance_records
             }
             attendance_collection.insert_one(attendance_doc)
             return JsonResponse({'message': 'Attendance saved successfully'})
+        except Exception as e:
+            return JsonResponse({'message': str(e)}, status=500)
+    return JsonResponse({'message': 'Invalid request method'}, status=405)
+
+@csrf_exempt
+def get_attendance(request):
+    if request.method == 'GET':
+        try:
+            id_number = request.GET.get('id_number')
+            date = request.GET.get('date')
+            if not id_number:
+                return JsonResponse({'message': 'Teacher ID (id_number) is missing'}, status=400)
+            if not date:
+                return JsonResponse({'message': 'Date is missing'}, status=400)
+            attendance_docs = list(attendance_collection.find({'id_number': id_number, 'date': date}))
+            if not attendance_docs:
+                return JsonResponse({'message': 'No attendance records found for the specified date'}, status=404)
+            attendance_records = []
+            for doc in attendance_docs:
+                attendance_records.extend(doc.get('attendance_records', []))
+            return JsonResponse({'message': 'Attendance records retrieved successfully', 'attendance_records': attendance_records})
         except Exception as e:
             return JsonResponse({'message': str(e)}, status=500)
     return JsonResponse({'message': 'Invalid request method'}, status=405)
