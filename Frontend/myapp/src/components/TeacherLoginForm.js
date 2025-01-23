@@ -20,9 +20,10 @@ const TeacherLoginForm = () => {
       if (response.ok) {
         console.log('Login successful:', data);
         alert('Login successful!');
+        window.location.href = `/attendance?teacherId=${data.id}`;
       } else {
         console.error('Login failed:', data);
-        alert(data.error || 'Login failed. Please try again.');
+        alert(data.message || 'Login failed. Please try again.');
       }
     } catch (error) {
       console.error('Error:', error);
@@ -67,7 +68,6 @@ const TeacherLoginForm = () => {
           <div>
             <a href="/teacher-register" className="text-blue-500 hover:underline">New Teacher? Register here.</a>
           </div>
-          
           <button
             type="submit"
             className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors"
